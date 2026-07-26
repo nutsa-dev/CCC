@@ -11,28 +11,29 @@ const mockTask = {
   requiredSkills: ['photo-product', 'design-social'], // კომპანიას სჭირდება ეს 2 სქილი
 };
 
-const mockCreators = [
-  {
-    id: 'creator-1',
-    name: 'გიორგი ბერიძე',
-    role: 'ფოტოგრაფი & დიზაინერი',
-    skills: ['photo-product', 'design-social', 'photo-portrait'],
-  },
-  {
-    id: 'creator-2',
-    name: 'ანა ნეიძე',
-    role: 'ვიდეომეიკერი',
-    skills: ['video-editing', 'video-reels'],
-  },
-  {
-    id: 'creator-3',
-    name: 'ნუცა კურდაძე',
-    role: 'Front-End & UI/UX',
-    skills: ['design-ui', 'design-social'],
-  },
-];
+export const MatchedCreatorsList = ({ currentUserSkills = [] }) => {
+  const mockCreators = [
+    {
+      id: 'creator-1',
+      name: 'გიორგი ბერიძე',
+      role: 'ფოტოგრაფი & დიზაინერი',
+      skills: ['photo-product', 'design-social', 'photo-portrait'],
+    },
+    {
+      id: 'creator-2',
+      name: 'ანა ნეიძე',
+      role: 'ვიდეომეიკერი',
+      skills: ['video-editing', 'video-reels'],
+    },
+    {
+      id: 'creator-3',
+      name: 'ნუცა კურდაძე',
+      role: 'Front-End & UI/UX',
+      // თუ სქილები არჩეულია, იყენებს დინამიურ სქილებს, თუ არა — default-ად 'design-ui'-ს
+      skills: currentUserSkills.length > 0 ? currentUserSkills : ['design-ui'],
+    },
+  ];
 
-export const MatchedCreatorsList = () => {
   // იპოვე სქილის დასახელება ID-ით
   const getSkillName = (skillId) => {
     const skill = SKILLS_LIST.find((s) => s.id === skillId);

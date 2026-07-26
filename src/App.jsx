@@ -1,8 +1,21 @@
 // src/App.jsx
-import React from 'react';
+import React, { useState } from 'react';
+import { CreatorSkillSelector } from './features/matching/components/CreatorSkillSelector';
 import { MatchedCreatorsList } from './features/matching/components/MatchedCreatorsList';
 
 function App() {
+  // დინამიური state კრეატორის არჩეული სქილებისთვის (ნაგულისხმევად ვადებთ ორ სქილს)
+  const [userSkills, setUserSkills] = useState(['design-social']);
+
+  // სქილის ჩართვა/გამორთვა (Toggle)
+  const handleToggleSkill = (skillId) => {
+    setUserSkills((prev) =>
+      prev.includes(skillId)
+        ? prev.filter((id) => id !== skillId)
+        : [...prev, skillId]
+    );
+  };
+
   return (
     <div className="min-h-screen bg-slate-100 py-10 px-4">
       <header className="max-w-2xl mx-auto mb-8 text-center">
@@ -14,8 +27,15 @@ function App() {
         </p>
       </header>
 
-      <main>
-        <MatchedCreatorsList />
+      <main className="space-y-6">
+        {/* სქილების სელექტორი კრეატორისთვის */}
+        <CreatorSkillSelector
+          selectedSkills={userSkills}
+          onToggleSkill={handleToggleSkill}
+        />
+
+        {/* თასქის და კრეატორების სია */}
+        <MatchedCreatorsList currentUserSkills={userSkills} />
       </main>
     </div>
   );
